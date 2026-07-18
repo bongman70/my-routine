@@ -104,12 +104,14 @@
 </nav>
 
 <script>
-/* ===== 루틴 정의 (Gemini 대화에서 확정된 내용) ===== */
+/* ===== 루틴 정의 ===== */
 const EX = {
   rdl:    {name:"루마니안 데드리프트", sets:4, reps:"8~10", rest:"2분", note:"메인 운동. 척추 중립 절대 유지"},
-  pullup: {name:"풀업 (턱걸이)", sets:4, reps:"실패지점", rest:"1.5분", note:"어시스트 머신·밴드 활용", bw:true},
   latpd:  {name:"랫 풀 다운", sets:3, reps:"12", rest:"1분", note:"당긴 상태 1초 수축 유지"},
   row:    {name:"시티드 로우", sets:3, reps:"12", rest:"1분", note:"명치 방향으로 당김"},
+  deadhang:{name:"매달리기 (데드행)", sets:3, reps:"30~60초", rest:"1분", bw:true, note:"등운동 마무리. 어깨 으쓱하지 않게 견갑 살짝 하강 · 그립·광배 스트레칭 효과"},
+  pushdown:{name:"케이블 푸시다운 (삼두)", sets:3, reps:"12~15", rest:"1분", note:"팔꿈치 몸통에 고정"},
+  ohext:  {name:"덤벨 오버헤드 익스텐션 (삼두)", sets:3, reps:"12", rest:"1분", note:"팔꿈치가 벌어지지 않게"},
   dbbench:{name:"덤벨 벤치 프레스", sets:4, reps:"10~12", rest:"1.5분"},
   incline:{name:"인클라인 덤벨 프레스", sets:3, reps:"12", rest:"1분", note:"벤치 각도 30도"},
   ohp:    {name:"덤벨 오버헤드 프레스", sets:3, reps:"10~12", rest:"1.5분", note:"코어 단단히 잡기"},
@@ -121,28 +123,39 @@ const EX = {
   legpress:{name:"레그 프레스", sets:4, reps:"12", rest:"1.5분", note:"발판 넓게"},
   legcurl:{name:"레그 컬", sets:3, reps:"12", rest:"1분"},
   calf:   {name:"카프 레이즈", sets:3, reps:"15~20", rest:"1분"},
+  dbcurl: {name:"덤벨 컬 (이두)", sets:3, reps:"10~12", rest:"1분", note:"반동 없이 천천히 내리기"},
+  hammer: {name:"해머 컬 (이두·전완)", sets:2, reps:"12", rest:"1분", note:"전완·상완요골근 강화"},
 };
 const ROUTINE = {
   0:{type:"rest", tag:"SUNDAY · REST", title:"완전 휴식",
      desc:"강도 높은 운동 금지. 가벼운 산책 30분, 온수 샤워로 회복에 집중. 밤 수면 압박을 축적하는 날."},
-  1:{type:"cardio", tag:"MON · CARDIO", title:"인터벌 러닝 (75분)",
-     desc:"오전 6~7시 야외에서. 자연광 노출로 생체 시계 리셋.",
-     items:["웜업 · 동적 스트레칭 15분 (맨몸 스쿼트 20회 포함)","인터벌 30분 : 빠르게 3분 + 걷기 2분 × 6회","쿨다운 걷기 10분","정적 스트레칭 · 폼롤러 15분 (하체 위주)"]},
-  2:{type:"strength", tag:"TUE · PULL", title:"등 & 후면 사슬 (85분)",
-     desc:"웜업 15분: 폼롤러 등 상부 + 맨몸 당기기 → 쿨다운 10분: 아기 자세 허리 이완",
-     ex:["rdl","pullup","latpd","row"]},
+  1:{type:"cardio", tag:"MON · INTERVAL", title:"인터벌 러닝 (70분)",
+     desc:"오전 6~7시 야외에서. 자연광 노출로 생체 시계 리셋. 주간 고강도 러닝은 이 날 하루.",
+     items:["웜업 · 동적 스트레칭 15분 (레그 스윙·맨몸 스쿼트 20회 포함)","인터벌 30분 : 빠르게 3분 + 걷기 2분 × 6회","쿨다운 걷기 10분","정적 스트레칭 · 폼롤러 15분 (하체 위주)"]},
+  2:{type:"strength", tag:"TUE · PULL+삼두", title:"등·후면 사슬 + 삼두 (80분)",
+     desc:"등운동은 삼두를 쓰지 않아 신선한 상태로 삼두 집중 가능. 마무리는 매달리기로 그립·광배 이완.",
+     warmT:"12분", coolT:"10분",
+     warmup:["폼롤러 등 상부·광배 이완 2분","캣카우 10회 + 밴드 풀어파트 15회 × 2","스캡 풀다운(견갑 하강 활성화) 12회 × 2","경량 RDL 10회 × 2 (본세트 무게의 50%)"],
+     ex:["rdl","latpd","row","deadhang","pushdown","ohext"],
+     cooldown:["아기 자세 1분 × 2 (허리 이완)","광배 스트레칭 좌우 30초 (기둥·랙 잡고)","삼두·전완 스트레칭 좌우 30초","폼롤러 척추기립근 2분"]},
   3:{type:"cardio", tag:"WED · SWIM", title:"수영 — 적극적 회복 (60분)",
      desc:"화요일 RDL 후 허리 이완이 목적. 벽 휴식은 20초 이내로 통제.",
      items:["웜업 10분 (가벼운 자유형·킥판)","50m 인터벌 × 15~20회 (휴식 20초 이내)","쿨다운 · 흉곽 열기 스트레칭 15분","수영 후 야외 햇볕 20분 (생체시계 보충)"]},
   4:{type:"strength", tag:"THU · PUSH+CORE", title:"가슴·어깨 & 코어 (85분)",
-     desc:"웜업 15분: 회전근개 스트레칭 필수 → 쿨다운 10분: 가슴·어깨 전면 스트레칭",
-     ex:["dbbench","incline","ohp","lateral","plank","deadbug","pallof"]},
-  5:{type:"cardio", tag:"FRI · CARDIO", title:"인터벌 러닝 (75분)",
-     desc:"주 2회 러닝은 밀도 있게. 심박 130~150bpm 유지.",
-     items:["웜업 · 동적 스트레칭 15분","인터벌 30분 : 빠르게 3분 + 걷기 2분 × 6회","쿨다운 걷기 10분","정적 스트레칭 · 폼롤러 15분"]},
-  6:{type:"strength", tag:"SAT · LEGS", title:"다리 & 하체 안정성 (85분)",
-     desc:"웜업 15분: 고관절 가동성 + 맨몸 스쿼트 30회 → 쿨다운 10분: 피전 포즈·장요근 이완",
-     ex:["squat","legpress","legcurl","calf"]},
+     desc:"프레스 계열 전 회전근개 웜업 필수. 코어는 세트 사이 휴식 짧게.",
+     warmT:"12분", coolT:"8분",
+     warmup:["폼롤러 흉추·어깨 뒤 2분","밴드 숄더 외회전 15회 × 2 (회전근개 필수)","월 슬라이드 10회 × 2","푸시업 10회 × 2 + 경량 프레스 1세트"],
+     ex:["dbbench","incline","ohp","lateral","plank","deadbug","pallof"],
+     cooldown:["도어웨이 가슴 스트레칭 좌우 30초 × 2","어깨 전면·크로스바디 스트레칭 좌우 30초","코브라 자세 1분 (흉곽 열기)"]},
+  5:{type:"cardio", tag:"FRI · EASY RUN", title:"지속주 러닝 (65분)",
+     desc:"고강도 인터벌은 월요일에 — 금요일은 대화 가능한 페이스의 지속주로 유산소 기반을 쌓는 날. 심박 130~150bpm 유지.",
+     items:["웜업 · 동적 스트레칭 10분 (레그 스윙·힙 서클)","지속주 35~40분 (일정한 페이스 · 대화 가능한 강도)","쿨다운 걷기 5분","정적 스트레칭 · 폼롤러 10분 (하체 위주)"]},
+  6:{type:"strength", tag:"SAT · LEGS+이두", title:"다리·하체 안정성 + 이두 (85분)",
+     desc:"하체 운동은 팔 피로가 없어 이두 직접 자극에 최적. 화(당기기 간접) + 토(직접)로 주 2회 이두 자극.",
+     warmT:"12분", coolT:"10분",
+     warmup:["폼롤러 대퇴사두·둔근·종아리 3분","레그 스윙 전후·좌우 10회 + 힙 서클 10회","월드 그레이티스트 스트레칭 좌우 5회","맨몸 스쿼트 15회 × 2 → 경량 스쿼트 1세트"],
+     ex:["squat","legpress","legcurl","calf","dbcurl","hammer"],
+     cooldown:["피전 포즈 좌우 1분 (둔근 이완)","런지 자세 장요근 스트레칭 좌우 45초","대퇴사두·햄스트링 스트레칭 각 30초","이두·전완 스트레칭 30초"]},
 };
 const MAIN_LIFTS = ["rdl","squat","dbbench","ohp"];
 
@@ -240,6 +253,15 @@ function viewToday(){
     return h;
   }
   /* strength */
+  if(rt.warmup){
+    const old = r.warm||[];
+    r.warm = rt.warmup.map((_,i)=>old[i]||false);
+    h += `<h4 class="sec">🔥 웜업 (${rt.warmT||"12분"})</h4><div class="card">` + rt.warmup.map((it,i)=>`
+      <div class="cl-item ${r.warm[i]?"on":""}" onclick="toggleWarm(${i})">
+        <div class="box">${r.warm[i]?"✓":""}</div><span>${it}</span>
+      </div>`).join("") + `</div>`;
+  }
+  h += `<h4 class="sec">💪 본운동</h4>`;
   h += rt.ex.map(id=>{
     const e = EX[id];
     const sets = ensureSets(r, id);
@@ -262,6 +284,14 @@ function viewToday(){
         </div>`).join("")}
     </div>`;
   }).join("");
+  if(rt.cooldown){
+    const old = r.cool||[];
+    r.cool = rt.cooldown.map((_,i)=>old[i]||false);
+    h += `<h4 class="sec">🧘 쿨다운 (${rt.coolT||"10분"})</h4><div class="card">` + rt.cooldown.map((it,i)=>`
+      <div class="cl-item ${r.cool[i]?"on":""}" onclick="toggleCool(${i})">
+        <div class="box">${r.cool[i]?"✓":""}</div><span>${it}</span>
+      </div>`).join("") + `</div>`;
+  }
   h += memoBox(r, "컨디션·특이사항 메모");
   h += doneBtn(r);
   return h;
@@ -283,6 +313,8 @@ function toggleCardio(i){ const r=rec(curDate); r.cardio[i]=!r.cardio[i];
   const rt=ROUTINE[fromIso(curDate).getDay()];
   if(rt.items && r.cardio.filter(Boolean).length===rt.items.length) r.done=true;
   save(); render(); }
+function toggleWarm(i){ const r=rec(curDate); r.warm[i]=!r.warm[i]; save(); render(); }
+function toggleCool(i){ const r=rec(curDate); r.cool[i]=!r.cool[i]; save(); render(); }
 function toggleSet(id,i){ const r=rec(curDate); ensureSets(r,id)[i].c=!r.sets[id][i].c; save(); render(); }
 function setVal(id,i,k,v){ const r=rec(curDate); ensureSets(r,id)[i][k]=v; save(); }
 
@@ -405,7 +437,8 @@ function viewSet(){
     <b style="color:var(--text)">사용 안내</b><br>
     · 데이터는 이 폰의 브라우저에 저장됩니다. 주 1회 '내보내기'로 백업하세요.<br>
     · 홈 화면에 추가하면 앱처럼 사용할 수 있습니다.<br>
-    · 루틴: 월·금 러닝 / 수 수영 / 화 등 / 목 가슴·어깨·코어 / 토 다리 / 일 휴식<br>
+    · 루틴: 월 인터벌 러닝 / 화 등·삼두 / 수 수영 / 목 가슴·어깨·코어 / 금 지속주 / 토 하체·이두 / 일 휴식<br>
+    · 모든 근력일은 웜업 → 본운동 → 쿨다운 순서, 총 90분 이내.<br>
     · 무산소 다음 날 새벽 각성이 심해지면 과훈련 신호 — 볼륨을 줄이세요.
   </div>`;
 }
